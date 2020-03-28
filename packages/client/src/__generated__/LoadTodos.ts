@@ -9,6 +9,7 @@
 
 export interface LoadTodos_todos_items {
   __typename: "Todo";
+  id: string;
   title: string;
   completed: boolean;
 }

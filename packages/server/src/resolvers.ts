@@ -2,6 +2,9 @@ import { CreateTodoMutationResponse, MutationAddTodoArgs } from './generated/gra
 import { TodoDataSource } from './datasources';
 import { GraphQLScalarType, Kind } from 'graphql';
 
+import { PubSub } from 'apollo-server';
+const pubsub = new PubSub();
+
 export default {
   Query: {
     todos: (
@@ -17,12 +20,18 @@ export default {
       { dataSources }: { dataSources: { todos: TodoDataSource } }
     ): Promise<CreateTodoMutationResponse> => {
       const newTodo = await dataSources.todos.addTodo(todo);
+      pubsub.publish('TODO_ADDED', { todoAdded: newTodo });
       return {
         success: true,
         code: 'CREATED',
         message: 'Created',
         todo: newTodo
       }
+    }
+  },
+  Subscription: {
+    todoAdded: {
+      subscribe: () => pubsub.asyncIterator(['TODO_ADDED'])
     }
   },
   Date: new GraphQLScalarType({

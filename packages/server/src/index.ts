@@ -19,4 +19,7 @@ const server = new ApolloServer({
   introspection: true,
   playground: true
 });
-server.listen().then(({ url }) => console.log(`Listening at ${url}`));
+server.listen().then(({ url, subscriptionsUrl }) => {
+  console.log(`Graphical at ${url}`)
+  console.log(`Subscriptions are at ${subscriptionsUrl}`)
+});

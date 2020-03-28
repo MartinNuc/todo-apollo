@@ -55,6 +55,11 @@ export type QueryTodosArgs = {
   offset?: Maybe<Scalars['Int']>;
 };
 
+export type Subscription = {
+   __typename?: 'Subscription';
+  todoAdded?: Maybe<Todo>;
+};
+
 export type Todo = {
    __typename?: 'Todo';
   id: Scalars['ID'];
@@ -155,6 +160,7 @@ export type ResolversTypes = {
   NewTodo: NewTodo,
   CreateTodoMutationResponse: ResolverTypeWrapper<CreateTodoMutationResponse>,
   MutationResponse: ResolversTypes['CreateTodoMutationResponse'],
+  Subscription: ResolverTypeWrapper<{}>,
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -171,6 +177,7 @@ export type ResolversParentTypes = {
   NewTodo: NewTodo,
   CreateTodoMutationResponse: CreateTodoMutationResponse,
   MutationResponse: ResolversParentTypes['CreateTodoMutationResponse'],
+  Subscription: {},
 };
 
 export type CreateTodoMutationResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateTodoMutationResponse'] = ResolversParentTypes['CreateTodoMutationResponse']> = {
@@ -201,6 +208,10 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   hasMore?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
 };
 
+export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
+  todoAdded?: SubscriptionResolver<Maybe<ResolversTypes['Todo']>, "todoAdded", ParentType, ContextType>,
+};
+
 export type TodoResolvers<ContextType = any, ParentType extends ResolversParentTypes['Todo'] = ResolversParentTypes['Todo']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
@@ -222,6 +233,7 @@ export type Resolvers<ContextType = any> = {
   Mutation?: MutationResolvers<ContextType>,
   MutationResponse?: MutationResponseResolvers,
   Query?: QueryResolvers<ContextType>,
+  Subscription?: SubscriptionResolvers<ContextType>,
   Todo?: TodoResolvers<ContextType>,
   TodoConnection?: TodoConnectionResolvers<ContextType>,
 };

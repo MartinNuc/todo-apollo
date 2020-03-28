@@ -50,3 +50,7 @@ type TodoConnection {
 }
 
 scalar Date
+
+type Subscription {
+  todoAdded: Todo
+}
