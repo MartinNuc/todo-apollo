@@ -1,15 +1,21 @@
 import { ApolloServer } from 'apollo-server';
+import { importSchema } from 'graphql-import';
 
-import typeDefs from './schema';
+const schema = importSchema('./src/schema.graphql');
+
 import resolvers from './resolvers';
 import { TodoDataSource } from './datasources';
 
+const todosDatasource = new TodoDataSource();
+
 const server = new ApolloServer({
-  typeDefs,
+  typeDefs: schema,
   resolvers,
-  dataSources: () => ({
-    todos: new TodoDataSource()
-  }),
+  dataSources: () => {
+    return {
+      todos: todosDatasource
+    };
+  },
   introspection: true,
   playground: true
 });

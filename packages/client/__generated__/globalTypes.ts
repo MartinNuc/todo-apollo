@@ -7,6 +7,11 @@
 // START Enums and Input Objects
 //==============================================================
 
+export interface NewTodo {
+  title: string;
+  completed?: boolean | null;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

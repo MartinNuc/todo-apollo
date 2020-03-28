@@ -1,9 +1,9 @@
 import { DataSource, DataSourceConfig } from 'apollo-datasource';
-import { Todo } from './models';
+import { NewTodo, Todo } from './generated/graphql';
 
 export class TodoDataSource extends DataSource {
   context: any;
-  data: Todo[] = [
+  data: Omit<Todo, 'id'>[] = [
     {
       title: 'Shopping',
       completed: false,
@@ -25,8 +25,24 @@ export class TodoDataSource extends DataSource {
     this.context = config.context;
   }
 
+  async addTodo(todo: NewTodo): Promise<Todo> {
+    const newLength = this.data.push({
+      ...todo,
+      completed: !!todo.completed,
+      created: new Date()
+    });
+    return {
+      ...this.data[newLength - 1],
+      id: `${newLength - 1}`
+    };
+  }
+  
   async getAll(offset: number, limit: number) {
     const afterOffset = this.data
+      .map((todo, index) => ({
+        ...todo,
+        id: `${index}`
+      }))
       .filter((_, index) => index >= offset)
     const afterOffsetCount = afterOffset.length;
     const items = afterOffset.filter((_, index) => index < limit);

@@ -3,6 +3,7 @@ import './App.css';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { LoadTodos, LoadTodosVariables } from './__generated__/LoadTodos';
+import NewTask from './NewTask';
 
 function App() {
   const { data, loading, fetchMore } = useQuery<LoadTodos, LoadTodosVariables>(gql`
@@ -50,6 +51,7 @@ function App() {
           {data?.todos.hasMore && <button onClick={() => loadMore(data.todos.cursor)}>Load More</button>}
         </>
       )}
+      <NewTask />
     </div>
   );
 }

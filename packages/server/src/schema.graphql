@@ -1,0 +1,52 @@
+type Todo {
+  id: ID!
+  title: String!
+  created: Date!
+  completed: Boolean!
+}
+
+type Query {
+  todos(
+    """
+    The number of results to show. Must be >= 1. Default = 20
+    """
+    limit: Int
+    """
+    If you add a cursor here, it will only return results _after_ this cursor
+    """
+    offset: Int
+  ): TodoConnection!
+  hasMore: Boolean
+}
+
+type Mutation {
+  addTodo(todo: NewTodo!): CreateTodoMutationResponse
+}
+
+interface MutationResponse {
+  code: String!
+  success: Boolean!
+  message: String!
+}
+
+type CreateTodoMutationResponse implements MutationResponse {
+  code: String!
+  success: Boolean!
+  message: String!
+  todo: Todo
+}
+
+input NewTodo {
+  "Title of the new ToDo"
+  title: String!
+  "Optional argument whether todo is already completed"
+  completed: Boolean
+}
+
+type TodoConnection {
+  cursor: Int!
+  hasMore: Boolean!
+  items: [Todo!]!
+}
+
+scalar Date

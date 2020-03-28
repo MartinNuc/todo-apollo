@@ -2,11 +2,7 @@
   "name": "todo-full-stack",
   "version": "1.0.0",
   "description": "Playground",
-  "main": "index.js",
   "private": true,
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MartinNuc/todo-apollo.git"
@@ -16,8 +12,11 @@
   "bugs": {
     "url": "https://github.com/MartinNuc/todo-apollo/issues"
   },
+  "scripts": {
+    "update:schema": "yarn run generate"
+  },
   "homepage": "https://github.com/MartinNuc/todo-apollo#readme",
   "workspaces": [
-    "client"
+    "packages/*"
   ]
 }

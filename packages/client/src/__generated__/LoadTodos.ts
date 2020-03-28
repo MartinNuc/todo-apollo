@@ -9,8 +9,8 @@
 
 export interface LoadTodos_todos_items {
   __typename: "Todo";
-  title: string | null;
-  completed: boolean | null;
+  title: string;
+  completed: boolean;
 }
 
 export interface LoadTodos_todos {
